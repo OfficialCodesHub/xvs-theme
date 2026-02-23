@@ -1,0 +1,24 @@
+{
+  "name": "xvs-theme",
+  "version": "1.0.0",
+  "description": "Arix-Inspired Premium Pterodactyl Theme",
+  "main": "public/themes/xvs/css/xvs-theme.css",
+  "scripts": {
+    "build": "node build.js",
+    "package": "tar -czf xvs-theme.tar.gz public/themes/xvs resources/views/layouts"
+  },
+  "keywords": [
+    "pterodactyl",
+    "theme",
+    "arix",
+    "premium",
+    "dark-theme"
+  ],
+  "author": "Your Name",
+  "license": "Proprietary",
+  "dependencies": {
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.0.0"
+  }
+}
