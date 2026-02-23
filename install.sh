@@ -1,42 +1,34 @@
 #!/bin/bash
 
-# ========================================
 # XVS Theme Installer for Pterodactyl
 # Arix-Inspired Modern UI
-# One-line installation: curl -fsSL https://your-site.com/install.sh | bash
-# ========================================
+# Repo: https://github.com/Lorinplayz/xvs-theme
 
 set -e
 
-# Colors for output
+# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
-NC='\033[0m' # No Color
-
-# Configuration
-THEME_NAME="XVS Theme"
-THEME_VERSION="1.0.0"
-THEME_AUTHOR="Your Name"
-PANEL_DIR="/var/www/pterodactyl"
-BACKUP_DIR="/root/pterodactyl-backup-$(date +%Y%m%d_%H%M%S)"
+NC='\033[0m'
 
 # Print banner
 echo -e "${PURPLE}"
 echo '╔══════════════════════════════════════════════════════════╗'
 echo '║                                                          ║'
-echo '║   ██╗  ██╗██╗   ██╗███████╗    ████████╗██╗  ██╗███████╗███╗   ███╗███████╗'
-echo '║   ╚██╗██╔╝██║   ██║██╔════╝    ╚══██╔══╝██║  ██║██╔════╝████╗ ████║██╔════╝'
-echo '║    ╚███╔╝ ██║   ██║███████╗       ██║   ███████║█████╗  ██╔████╔██║█████╗  '
-echo '║    ██╔██╗ ██║   ██║╚════██║       ██║   ██╔══██║██╔══╝  ██║╚██╔╝██║██╔══╝  '
-echo '║   ██╔╝ ██╗╚██████╔╝███████║       ██║   ██║  ██║███████╗██║ ╚═╝ ██║███████╗'
-echo '║   ╚═╝  ╚═╝ ╚═════╝ ╚══════╝       ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝╚══════╝'
+echo '║   ██╗  ██╗██╗   ██╗███████╗    ████████╗██╗  ██╗███████╗'
+echo '║   ╚██╗██╔╝██║   ██║██╔════╝    ╚══██╔══╝██║  ██║██╔════╝'
+echo '║    ╚███╔╝ ██║   ██║███████╗       ██║   ███████║█████╗  '
+echo '║    ██╔██╗ ██║   ██║╚════██║       ██║   ██╔══██║██╔══╝  '
+echo '║   ██╔╝ ██╗╚██████╔╝███████║       ██║   ██║  ██║███████╗'
+echo '║   ╚═╝  ╚═╝ ╚═════╝ ╚══════╝       ╚═╝   ╚═╝  ╚═╝╚══════╝'
 echo '║                                                          ║'
 echo '║            Arix-Inspired Premium Pterodactyl Theme       ║'
 echo '║                    Version 1.0.0                         ║'
+echo '║                by Lorinplayz                             ║'
 echo '╚══════════════════════════════════════════════════════════╝'
 echo -e "${NC}"
 
@@ -46,17 +38,20 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
+# Panel directory
+PANEL_DIR="/var/www/pterodactyl"
+
 # Check if panel exists
 if [ ! -d "$PANEL_DIR" ]; then
     echo -e "${RED}❌ Pterodactyl panel not found in $PANEL_DIR${NC}"
-    echo -e "${YELLOW}Please install Pterodactyl first and try again.${NC}"
     exit 1
 fi
 
 echo -e "${CYAN}📁 Panel found at: $PANEL_DIR${NC}"
 
 # Create backup
-echo -e "${YELLOW}📦 Creating backup before installation...${NC}"
+BACKUP_DIR="/root/pterodactyl-backup-$(date +%Y%m%d_%H%M%S)"
+echo -e "${YELLOW}📦 Creating backup...${NC}"
 mkdir -p "$BACKUP_DIR"
 cp -r "$PANEL_DIR"/* "$BACKUP_DIR" 2>/dev/null || true
 echo -e "${GREEN}✅ Backup created at: $BACKUP_DIR${NC}"
@@ -68,47 +63,30 @@ php artisan down --retry=60
 
 # Create theme directory
 echo -e "${YELLOW}📁 Creating theme directory...${NC}"
-mkdir -p "$PANEL_DIR/public/themes/xvs/css"
-mkdir -p "$PANEL_DIR/resources/views/layouts"
+mkdir -p "$PANEL_DIR/public/themes/xvs"
 
-# Download theme files (replace with your actual URLs)
-echo -e "${YELLOW}⬇️  Downloading XVS Theme files...${NC}"
+# Download theme CSS from GitHub
+echo -e "${YELLOW}⬇️  Downloading XVS Theme CSS...${NC}"
+curl -fsSL https://raw.githubusercontent.com/Lorinplayz/xvs-theme/main/xvs-theme.css -o "$PANEL_DIR/public/themes/xvs/xvs-theme.css"
 
-# Create the CSS file directly (in a real scenario, you'd download from your server)
-cat > "$PANEL_DIR/public/themes/xvs/css/xvs-theme.css" << 'EOF'
-/* XVS Theme CSS - Paste the entire CSS content from File 1 here */
-EOF
+# Download wrapper
+echo -e "${YELLOW}⬇️  Downloading theme wrapper...${NC}"
+curl -fsSL https://raw.githubusercontent.com/Lorinplayz/xvs-theme/main/wrapper.blade.php -o "$PANEL_DIR/resources/views/layouts/admin.blade.php"
 
-# Create wrapper file
-cat > "$PANEL_DIR/resources/views/layouts/admin.blade.php" << 'EOF'
-{{-- XVS Theme Wrapper - Paste the entire wrapper content from File 2 here --}}
-EOF
-
-# Install dependencies
-echo -e "${YELLOW}📦 Installing Node dependencies...${NC}"
-if ! command -v node &> /dev/null; then
-    echo -e "${YELLOW}Installing Node.js...${NC}"
-    curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
-    apt-get install -y nodejs
+# Install dependencies and build
+echo -e "${YELLOW}🔨 Building assets...${NC}"
+if command -v yarn &> /dev/null; then
+    yarn install
+    yarn run production
+else
+    npm install
+    npm run production
 fi
-
-if ! command -v yarn &> /dev/null; then
-    echo -e "${YELLOW}Installing Yarn...${NC}"
-    npm install -g yarn
-fi
-
-cd "$PANEL_DIR"
-yarn install
-
-# Build assets
-echo -e "${YELLOW}🔨 Building panel assets...${NC}"
-yarn run production
 
 # Set permissions
 echo -e "${YELLOW}🔒 Setting permissions...${NC}"
 chown -R www-data:www-data "$PANEL_DIR"
-chmod -R 755 "$PANEL_DIR/storage"
-chmod -R 755 "$PANEL_DIR/bootstrap/cache"
+chmod -R 755 "$PANEL_DIR/storage" "$PANEL_DIR/bootstrap/cache"
 
 # Clear cache
 echo -e "${YELLOW}🧹 Clearing cache...${NC}"
@@ -119,25 +97,22 @@ php artisan cache:clear
 # Exit maintenance mode
 php artisan up
 
+# Get server IP
+SERVER_IP=$(curl -s ifconfig.me 2>/dev/null || hostname -I | awk '{print $1}')
+
 echo -e "${GREEN}══════════════════════════════════════════════════════════${NC}"
 echo -e "${GREEN}✅ XVS Theme installed successfully!${NC}"
 echo -e "${GREEN}══════════════════════════════════════════════════════════${NC}"
 echo ""
-echo -e "${CYAN}Theme Information:${NC}"
-echo -e "  Name: ${PURPLE}$THEME_NAME${NC}"
-echo -e "  Version: ${PURPLE}$THEME_VERSION${NC}"
-echo -e "  Author: ${PURPLE}$THEME_AUTHOR${NC}"
+echo -e "${CYAN}📊 Installation Details:${NC}"
+echo -e "  Theme: ${PURPLE}XVS Theme v1.0.0${NC}"
+echo -e "  Author: ${PURPLE}Lorinplayz${NC}"
+echo -e "  Panel: ${PURPLE}$PANEL_DIR${NC}"
+echo -e "  Backup: ${PURPLE}$BACKUP_DIR${NC}"
 echo ""
-echo -e "${CYAN}Installation Details:${NC}"
-echo -e "  Panel Directory: ${PURPLE}$PANEL_DIR${NC}"
-echo -e "  Backup Location: ${PURPLE}$BACKUP_DIR${NC}"
+echo -e "${CYAN}🌐 Access your panel:${NC}"
+echo -e "  ${PURPLE}http://$SERVER_IP${NC}"
 echo ""
-echo -e "${CYAN}What's Next?${NC}"
-echo -e "  1. Visit your panel at: ${PURPLE}https://your-domain.com${NC}"
-echo -e "  2. Clear your browser cache (Ctrl+F5)"
-echo -e "  3. Enjoy your new Arix-inspired theme!"
-echo ""
-echo -e "${YELLOW}To restore backup if needed:${NC}"
-echo -e "  cp -r $BACKUP_DIR/* $PANEL_DIR/"
-echo ""
+echo -e "${GREEN}══════════════════════════════════════════════════════════${NC}"
+echo -e "${GREEN}🎉 Enjoy your Arix-inspired XVS Theme!${NC}"
 echo -e "${GREEN}══════════════════════════════════════════════════════════${NC}"
