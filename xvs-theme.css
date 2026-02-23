@@ -1,1 +1,481 @@
+/* ========================================
+   XVS Theme for Pterodactyl v1.0.0
+   Arix-Inspired Modern UI
+   Author: Your Name
+   ======================================== */
 
+/* Google Fonts - Same premium typography as Arix */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+
+/* ===== CSS Variables - Easy customization ===== */
+:root {
+    /* Primary Colors - Arix-inspired gradient */
+    --primary-start: #6366f1;    /* Indigo */
+    --primary-end: #8b5cf6;       /* Purple */
+    --primary-gradient: linear-gradient(135deg, var(--primary-start), var(--primary-end));
+    
+    /* Background Colors */
+    --bg-dark: #0f0f13;
+    --bg-darker: #09090b;
+    --bg-card: #18181b;
+    --bg-card-hover: #202024;
+    
+    /* Text Colors */
+    --text-primary: #ffffff;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    
+    /* Accent Colors */
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --info: #3b82f6;
+    
+    /* Border & Shadow */
+    --border-color: #27272a;
+    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    --hover-shadow: 0 20px 30px -10px rgba(99, 102, 241, 0.2);
+    
+    /* Animations */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+}
+
+/* ===== Global Styles ===== */
+* {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg-darker) !important;
+    color: var(--text-primary) !important;
+}
+
+/* ===== Sidebar - Arix Style ===== */
+.dark\:bg-gray-800,
+aside.bg-gray-800 {
+    background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-darker) 100%) !important;
+    border-right: 1px solid var(--border-color) !important;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Sidebar Menu Items */
+aside a {
+    border-radius: 12px !important;
+    margin: 4px 12px !important;
+    padding: 12px 16px !important;
+    transition: all var(--transition-normal) !important;
+    color: var(--text-secondary) !important;
+    font-weight: 500 !important;
+}
+
+aside a:hover {
+    background: var(--bg-card-hover) !important;
+    color: var(--text-primary) !important;
+    transform: translateX(5px);
+    box-shadow: var(--card-shadow);
+}
+
+aside a.active {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+    box-shadow: 0 8px 20px -5px var(--primary-start) !important;
+}
+
+/* Sidebar Icons */
+aside a i,
+aside a svg {
+    margin-right: 12px !important;
+    font-size: 1.2rem !important;
+    width: 24px !important;
+    text-align: center !important;
+}
+
+/* ===== Main Content Area ===== */
+.dark\:bg-gray-900,
+main.bg-gray-900 {
+    background: var(--bg-dark) !important;
+}
+
+/* ===== Cards - Arix Premium Style ===== */
+.card,
+.bg-gray-700,
+.dark\:bg-gray-700 {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 16px !important;
+    box-shadow: var(--card-shadow) !important;
+    transition: all var(--transition-normal) !important;
+    backdrop-filter: blur(10px);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--hover-shadow) !important;
+    border-color: var(--primary-start) !important;
+}
+
+/* Card Headers */
+.card-header,
+h3.font-medium {
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    letter-spacing: 0.5px !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 16px !important;
+}
+
+/* ===== Server Cards - Arix Dashboard Style ===== */
+.server-card {
+    background: var(--bg-card) !important;
+    border-radius: 16px !important;
+    padding: 20px !important;
+    border: 1px solid var(--border-color) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.server-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--primary-gradient);
+    transform: scaleX(0);
+    transition: transform var(--transition-normal);
+}
+
+.server-card:hover::before {
+    transform: scaleX(1);
+}
+
+.server-card .server-name {
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    margin-bottom: 8px !important;
+}
+
+/* Server Status Badges */
+.status-online {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: var(--success) !important;
+    padding: 4px 12px !important;
+    border-radius: 20px !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+.status-offline {
+    background: rgba(239, 68, 68, 0.15) !important;
+    color: var(--danger) !important;
+    padding: 4px 12px !important;
+    border-radius: 20px !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+}
+
+/* ===== Resource Bars ===== */
+.resource-bar {
+    height: 8px !important;
+    background: var(--bg-darker) !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+    margin: 8px 0 !important;
+}
+
+.resource-bar-fill {
+    height: 100%;
+    background: var(--primary-gradient) !important;
+    border-radius: 4px !important;
+    transition: width var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.resource-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+/* ===== Buttons - Arix Style ===== */
+button.bg-primary-500,
+button.bg-primary-600,
+.btn-primary {
+    background: var(--primary-gradient) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 10px 20px !important;
+    font-weight: 600 !important;
+    color: white !important;
+    transition: all var(--transition-normal) !important;
+    box-shadow: 0 4px 15px -5px var(--primary-start) !important;
+}
+
+button.bg-primary-500:hover,
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px -5px var(--primary-start) !important;
+}
+
+.btn-secondary {
+    background: var(--bg-card-hover) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    padding: 10px 20px !important;
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+    transition: all var(--transition-normal) !important;
+}
+
+.btn-secondary:hover {
+    background: var(--bg-card) !important;
+    border-color: var(--primary-start) !important;
+}
+
+/* ===== Tables ===== */
+table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+}
+
+table thead tr {
+    background: var(--bg-darker) !important;
+    border-bottom: 2px solid var(--border-color) !important;
+}
+
+table th {
+    padding: 12px 16px !important;
+    text-align: left !important;
+    font-weight: 600 !important;
+    color: var(--text-secondary) !important;
+    text-transform: uppercase !important;
+    font-size: 0.85rem !important;
+    letter-spacing: 0.5px !important;
+}
+
+table td {
+    padding: 12px 16px !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+table tbody tr:hover {
+    background: var(--bg-card-hover) !important;
+}
+
+/* ===== Navigation Bar ===== */
+nav.bg-gray-700,
+.dark\:bg-gray-700 {
+    background: var(--bg-card) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+/* ===== Dropdown Menus ===== */
+.dropdown-menu {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 20px 30px -10px black !important;
+    padding: 8px !important;
+}
+
+.dropdown-item {
+    padding: 10px 16px !important;
+    border-radius: 12px !important;
+    color: var(--text-secondary) !important;
+    transition: all var(--transition-fast) !important;
+}
+
+.dropdown-item:hover {
+    background: var(--bg-card-hover) !important;
+    color: var(--text-primary) !important;
+}
+
+/* ===== Forms & Inputs ===== */
+input, select, textarea {
+    background: var(--bg-darker) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 12px !important;
+    padding: 12px 16px !important;
+    color: var(--text-primary) !important;
+    transition: all var(--transition-fast) !important;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-start) !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2) !important;
+    outline: none !important;
+}
+
+input::placeholder {
+    color: var(--text-muted) !important;
+}
+
+/* ===== Alerts & Notifications ===== */
+.alert-success {
+    background: rgba(16, 185, 129, 0.1) !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+    border-radius: 12px !important;
+    color: var(--success) !important;
+    padding: 12px 16px !important;
+}
+
+.alert-warning {
+    background: rgba(245, 158, 11, 0.1) !important;
+    border: 1px solid rgba(245, 158, 11, 0.3) !important;
+    border-radius: 12px !important;
+    color: var(--warning) !important;
+    padding: 12px 16px !important;
+}
+
+.alert-danger {
+    background: rgba(239, 68, 68, 0.1) !important;
+    border: 1px solid rgba(239, 68, 68, 0.3) !important;
+    border-radius: 12px !important;
+    color: var(--danger) !important;
+    padding: 12px 16px !important;
+}
+
+/* ===== Modals ===== */
+.modal-content {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 30px 40px -15px black !important;
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color) !important;
+    padding: 20px !important;
+}
+
+.modal-body {
+    padding: 20px !important;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-color) !important;
+    padding: 20px !important;
+}
+
+/* ===== Progress Bars ===== */
+.progress {
+    background: var(--bg-darker) !important;
+    border-radius: 8px !important;
+    height: 10px !important;
+    overflow: hidden !important;
+}
+
+.progress-bar {
+    background: var(--primary-gradient) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ===== Tooltips ===== */
+.tooltip {
+    background: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    border-radius: 8px !important;
+    padding: 6px 12px !important;
+    font-size: 0.85rem !important;
+    border: 1px solid var(--border-color) !important;
+    box-shadow: var(--card-shadow) !important;
+}
+
+/* ===== Custom Scrollbar ===== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-darker);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-start);
+}
+
+/* ===== Loading Animations ===== */
+.loading-spinner {
+    border: 3px solid var(--bg-darker);
+    border-top: 3px solid var(--primary-start);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== Badges ===== */
+.badge {
+    padding: 4px 10px !important;
+    border-radius: 20px !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+.badge-primary {
+    background: var(--primary-gradient) !important;
+    color: white !important;
+}
+
+.badge-success {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: var(--success) !important;
+    border: 1px solid rgba(16, 185, 129, 0.3) !important;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        position: fixed !important;
+        z-index: 1000;
+        transition: transform var(--transition-normal);
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .card {
+        margin: 10px !important;
+    }
+}
