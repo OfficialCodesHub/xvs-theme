@@ -106,7 +106,7 @@ echo -e "${GREEN}═════════════════════
 echo ""
 echo -e "${CYAN}📊 Installation Details:${NC}"
 echo -e "  Theme: ${PURPLE}XVS Theme v1.0.0${NC}"
-echo -e "  Author: ${PURPLE}Lorinplayz${NC}"
+echo -e "  Author: ${PURPLE}AyushTheWarrior${NC}"
 echo -e "  Panel: ${PURPLE}$PANEL_DIR${NC}"
 echo -e "  Backup: ${PURPLE}$BACKUP_DIR${NC}"
 echo ""
