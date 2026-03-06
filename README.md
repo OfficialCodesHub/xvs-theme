@@ -24,4 +24,4 @@ A premium, Arix-inspired theme for Pterodactyl panel. Modern, clean, and feature
 Install XVS Theme with a single command:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Lorinplayz/xvs-theme/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/OfficialCodesHub/xvs-theme/main/install.sh | bash
